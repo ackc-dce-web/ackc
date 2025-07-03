@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register | Korean Language Association</title>
+    <link rel="stylesheet" href="./style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Country Select CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/css/intlTelInput.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/css/intlTelInput.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/intlTelInput.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/utils.js"></script>
+</head>
+<body>
+
+    <nav>
+        <div class="logo">
+            <span>한국어 학회</span>
+            <span>Korean Language Association of <br> Ananda College</span>
+        </div>
+        <ul class="nav-links">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="about.html">About Us</a></li>
+            <li><a href="gallery.html">Gallery</a></li>
+            <li><a href="competitions.html">Competitions</a></li>
+            <li><a href="contact.html">Contact Us</a></li>
+        </ul>
+    </nav>
+
+    <section class="registration-form">
+        <h1>Register for Competition</h1>
+        <form action="https://formsubmit.co/damsarasasindu2010@gmail.com" method="POST">
+            <!-- FormSubmit Config -->
+            <input type="hidden" name="_subject" value="New Competition Registration!">
+            <input type="hidden" name="_template" value="table">
+            <input type="hidden" name="_next" value="./thank-you.html">
+            
+            <!-- User Input Fields -->
+            <div class="form-group">
+                <label>Full Name*</label>
+                <input type="text" name="name" required>
+            </div>
+
+            <div class="form-group">
+                <label>Age*</label>
+                <input type="number" name="age" required>
+            </div>
+
+            <div class="form-group">
+                <label>Home Address*</label>
+                <input type="text" name="address" required>
+            </div>
+
+            <div class="form-group">
+                <label>Grade*</label>
+                <div class="styled-dropdown">
+                <select id="styled-dropdown" name="styled-dropdown">
+                    <option value="">-- Select --</option>
+                    <option value="6">06</option>
+                    <option value="7">07</option>
+                    <option value="8">08</option>
+                    <option value="9">09</option>
+                    <option value="10">10</option>
+                    <option value="11">11</option>
+                    <option value="12">12</option>
+                    <option value="13">13</option>
+                    <option value="ol">After O/Ls</option>
+                    <option value="al">After A/Ls</option>
+                </select>
+                <span class="dropdown-arrow">▼</span>
+            </div>
+
+            </div>
+
+            <div class="form-group">
+                <label>Email*</label>
+                <input type="email" name="email" required>
+            </div>
+            
+            <div class="form-group">
+                <label>School/Institution*</label>
+                <input type="text" name="school" required>
+            </div>
+
+            <div class="form-group">
+                <label>School/Institution Address*</label>
+                <input type="text" name="sch_address" required>
+            </div>
+
+            <!-- Enhanced Phone Input -->
+            <div class="form-group">
+                <label>Phone Number*</label>
+                <input type="tel" id="phone" name="phone" required>
+                <input type="hidden" id="countryCode" name="countryCode">
+            </div>
+            <p>Please select your country code in above drop down.</p><br><br>
+        
+            <button type="submit" class="btn">Submit Registration</button>
+        </form>
+    </section>
+
+    <footer>
+        <p>&copy; 2025 Korean Language Association,Ananda College,Colombo 10</p>
+        <div class="social-icons">
+            <a href="#"><i class="fab fa-instagram"></i></a>
+            <a href="#"><i class="fab fa-facebook"></i></a>
+            <a href="#"><i class="fab fa-twitter"></i></a>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/intlTelInput.min.js"></script>
+    <script>
+        // Initialize phone input
+        const phoneInput = window.intlTelInput(document.querySelector("#phone"), {
+            preferredCountries: ["kr", "us", "gb", "jp"],
+            separateDialCode: true,
+            utilsScript: "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/utils.js"
+        });
+
+        // Update hidden country code field before form submission
+        document.querySelector("form").addEventListener("submit", function() {
+            document.querySelector("#countryCode").value = "+" + phoneInput.getSelectedCountryData().dialCode;
+            
+            // Format phone number (remove dial code)
+            const fullNumber = phoneInput.getNumber();
+            const dialCode = "+" + phoneInput.getSelectedCountryData().dialCode;
+            document.querySelector("#phone").value = fullNumber.replace(dialCode, "").trim();
+        });
+
+        // Auto-format phone number while typing
+        document.querySelector("#phone").addEventListener("input", function() {
+            const countryData = phoneInput.getSelectedCountryData();
+            if (countryData.dialCode === "82") { // Special format for Korea
+                let value = this.value.replace(/\D/g, '');
+                if (value.length > 2) {
+                    value = value.substring(0,2) + "-" + value.substring(2);
+                }
+                if (value.length > 6) {
+                    value = value.substring(0,6) + "-" + value.substring(6);
+                }
+                this.value = value.substring(0,11);
+            }
+        });
+    </script>
+</body>
+</html>
